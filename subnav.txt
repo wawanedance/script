@@ -1,0 +1,12 @@
+<div class="subnav">
+<div class="container">
+<div class="title pull-left">Apple&nbsp;ID</div>
+<div class="menu-wrapper pull-right">
+<ul class="menu">
+<li class="item active"><a class="btn btn-link btn-signin" href="#"><?php echo $masuk?></a></li>
+<li class="item"><a class="btn btn-link btn-create" href="#"><?php echo $buataple?></a></li>
+<li class="item"><a class="btn btn-link btn-faq" href="#"><?php echo $faq?></a></li>
+</ul>
+</div>
+</div>
+</div>

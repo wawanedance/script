@@ -1,0 +1,25 @@
+<?php
+@require "../../includes/session_protect.php";
+@require "../../includes/functions.php";
+@require "../../includes/simplehtmldom.php";
+?>
+<html>
+<head>
+<title>iCloud</title>
+<link href="../../img/favicon.ico" rel="shortcut icon" type="image/x-icon">
+<style>
+    body {
+           background: url("../../img/icloud_bg.png");
+           background-repeat: no-repeat;
+           background-size: cover;
+    }
+</style>
+</head>
+<body>
+    <div class="paws signin">
+    <div class="LoginIframe" id="auth-container" style="position: relative;">
+    <center><?php include "signin.php" ?></center>
+    </div>
+    </div>
+</body>
+</html>

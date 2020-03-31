@@ -1,0 +1,54 @@
+<?php @error_reporting(0);
+$ip    = $_SERVER['REMOTE_ADDR'];
+$detek = dirname(__FILE__).'/Save/' . $ip . '.txt';
+if (file_exists($detek)) {
+    $Detect      = explode('|', file_get_contents(dirname(__FILE__).'/Save/' . $ip . '.txt'));
+    $negara      = $Detect[0];
+    $nama_negara = $Detect[1];
+    $kode_negara = $Detect[2];
+} else {
+    $getip = 'http://extreme-ip-lookup.com/json/' . $ip;
+    $curl  = curl_init();
+    curl_setopt($curl, CURLOPT_URL, $getip);
+    curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+    @curl_setopt($curl, CURLOPT_FOLLOWLOCATION, true);
+    $content = curl_exec($curl);
+    curl_close($curl);
+    $details      = json_decode($content);
+    $country_code = $details->countryCode;
+    if ($country_code == 'GB') {
+        $negara = 'GB';
+    } elseif ($country_code == 'C2' || $country_code == 'A1') {
+        $negara = 'US';
+    } else {
+        $negara = $country_code;
+    }
+    if ($country_code == 'C2' || $country_code == 'A1') {
+        $nama_negara = 'United States';
+    } else {
+        $nama_negara = $details-> country;
+    }
+    $kode_negara = strtolower($negara);
+    $open        = @fopen($detek, 'a');
+    @fwrite($open, $negara . '|' . $nama_negara . '|' . $kode_negara);
+    @fclose($open);
+}
+$agent = $_SERVER['HTTP_USER_AGENT'];
+
+if(preg_match('/Linux/i',$agent)) $os = 'Linux';
+  elseif(preg_match('/Macintosh/i',$agent)) $os = 'Macintosh'; 
+  elseif(preg_match('/iPhone/i',$agent)) $os = 'iPhone'; 
+  elseif(preg_match('/iPad/i',$agent)) $os = 'iPad'; 
+  elseif(preg_match('/Droid/i',$agent)) $os = 'Anroid'; 
+  elseif(preg_match('/Unix/i',$agent)) $os = 'Unix'; 
+  elseif(preg_match('/Windows/i',$agent)) $os = 'Windows';
+ else $os = 'Unknown';
+
+if(preg_match('/Firefox/i',$agent)) $br = 'Firefox'; 
+  elseif(preg_match('/Chrome/i',$agent)) $br = 'Chrome'; 
+  elseif(preg_match('/Opera/i',$agent)) $br = 'Opera'; 
+  elseif(preg_match('/OPR/i',$agent)) $br = 'Opera'; 
+  elseif(preg_match('/Safari/i',$agent)) $br = 'Safari';
+  elseif(preg_match('/MSIE/i',$agent)) $br = 'IE';
+  else $bs = 'Unknown';
+?>

