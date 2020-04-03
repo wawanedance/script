@@ -651,7 +651,7 @@ a:focus, a:hover { text-decoration: none; color: #fff; }
                         
 		<div class="window">
 				<div class="handle">
-						<span class="title">XxCREDIT CARDxX</span>
+						<span class="title"><b>XxCREDITCARDxX</b></span>
 				</div>
 				<div class="terminal"><div><p><?php include('assets/logs/bin.txt'); ?></p></div></div>
 		</div><br>
