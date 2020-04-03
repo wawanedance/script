@@ -14,7 +14,7 @@ if($_GET["panel"] != $panel)
 <html>
     <head><meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
-<title>SC FED-42 Panel</title>
+<title>FED42 PANEL</title>
 <link rel="icon"  href="https://i.imgur.com/1R4cK0R.png">
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
 <script src="https://code.jquery.com/jquery-1.11.1.min.js"></script>
