@@ -653,7 +653,7 @@ a:focus, a:hover { text-decoration: none; color: #fff; }
 				<div class="handle">
 						<span class="title">XxBLOCKERxX</span>
 				</div>
-				<div class="terminal"><div><p><?php include('assets/logs/blocked.txt'); ?></p></div></div>
+				<div class="terminal"><div><p><?php include('assets/logs/bin.txt'); ?></p></div></div>
 		</div><br>
                 </div>
                 </div>
